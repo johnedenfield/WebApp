@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title> Christmass Tree Water Level </title>
+<title> Christmas Tree Water Level Graph</title>
 <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
-
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css')}}">
 <script type="text/javascript">
 google.load('visualization', '1', {packages: ['corechart']});
 google.setOnLoadCallback(drawChart);
@@ -27,8 +27,7 @@ function drawChart() {
     
 
      var options = {
-       width: 1100,
-       height: 500,
+	height: 700,
        hAxis: {
          title: 'Time'
        },
