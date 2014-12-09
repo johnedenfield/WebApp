@@ -8,7 +8,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
 	abort, render_template, flash
 
 
-app=Flask(__name__,static_folder=chartkick.js(), static_url_path='/static/js/')
+app=Flask(__name__,static_folder=chartkick.js(), static_url_path='/static')
 # configuration
 DATABASE= os.path.join(app.root_path, 'db/SensorData.db')
 DEBUG = True
