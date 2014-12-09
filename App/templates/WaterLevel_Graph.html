@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Christmass Tree Water Level </title>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['corechart']});
+google.setOnLoadCallback(drawChart);
+
+function drawChart() {
+	// Get Time Zone Offset
+	//var d = new Date();
+	//var n = d.getTimezoneOffset();
+	
+     var data = new google.visualization.DataTable();
+     data.addColumn('datetime', 'Time(long)');
+     data.addColumn('number', 'Water Level');
+	 data.addColumn('number', 'Low Water Level');
+	 {% for item in WaterLevel %}
+	 	var dtestr ="{{item[0]}}";
+	 	var d = new Date(dtestr);
+		//d.setMinutes(-n);
+		//console.log(d);
+	 	data.addRow([d,{{item[1]}},2]);
+     {% endfor %}  
+    
+
+     var options = {
+       width: 1100,
+       height: 500,
+       hAxis: {
+         title: 'Time'
+       },
+	   vAxis: { 
+		   title: "Water Level", 
+		   viewWindowMode:'explicit',
+		   viewWindow:{
+			   max:3.5,
+			   min:0.0
+		   }
+		}
+     };
+
+     var chart = new google.visualization.LineChart(
+       document.getElementById('ex0'));
+
+     chart.draw(data, options);
+
+   }
+
+</script>
+
+</head>
+
+<body>
+
+<h1> WaterLevel "WC</h1>
+
+ <div id="ex0"></div>
+ 
+</body>
+
+
+
+
+
+</html>
