@@ -1,0 +1,8 @@
+# Database
+*.db
+
+#GPIO Handshake
+GPIOHandShake.txt
+
+
+

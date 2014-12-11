@@ -1,62 +1,59 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title> Christmas Tree Water Level Graph</title>
-<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css')}}">
-<script type="text/javascript">
-google.load('visualization', '1', {packages: ['corechart']});
-google.setOnLoadCallback(drawChart);
+<head lang="en">
+	<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-function drawChart() {
-	// Get Time Zone Offset
-	//var d = new Date();
-	//var n = d.getTimezoneOffset();
+	<title> Christmas Tree Water Level Graph</title>
+	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+	<script type="text/javascript" src="{{ url_for('static', filename='jsCharts/WaterLevelChart.js')}}"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	
-     var data = new google.visualization.DataTable();
-     data.addColumn('datetime', 'Time(long)');
-     data.addColumn('number', 'Water Level');
-	 data.addColumn('number', 'Low Water Level');
-	 {% for item in WaterLevel %}
-	 	var dtestr ="{{item[0]}}";
-	 	var d = new Date(dtestr);
-		//d.setMinutes(-n);
-		//console.log(d);
-	 	data.addRow([d,{{item[1]}},2]);
-     {% endfor %}  
-    
-
-     var options = {
-	height: 700,
-       hAxis: {
-         title: 'Time'
-       },
-	   vAxis: { 
-		   title: "Water Level", 
-		   viewWindowMode:'explicit',
-		   viewWindow:{
-			   max:3.5,
-			   min:0.0
-		   }
-		}
-     };
-
-     var chart = new google.visualization.LineChart(
-       document.getElementById('ex0'));
-
-     chart.draw(data, options);
-
-   }
-
+	<script type="text/javascript">
+	$(document).ready(function(){
+		google.load('visualization', '1', {packages: ['corechart']});
+		google.setOnLoadCallback(WaterLevelChart({{WaterLevel|safe}}));
+	});
 </script>
 
 </head>
 
 <body>
+<div class="header"> 
 
-<h1> WaterLevel "WC</h1>
+</div>
+<div class="row">
+        <div class="col-sm-1 col-md-1">
 
- <div id="ex0"></div>
+ 	</div>
+        <div class="col-sm-9 col-sm-offset-1 col-md-9 col-md-offset-1 main">
+         	<h1 class="page-header">Christmas Tree Water Level</h1>
+
+		<div class="row placeholders">
+			{% if CurrentLevel[1] > 2%}
+			 <div class="alert alert-success" role="alert">
+                                <strong>Ok Water Level </strong> 
+				Water Level is {{ '%0.2f' % CurrentLevel[1]}} recorded at {{CurrentLevel[0]}}.
+                        </div>
+			{% endif %}
+			
+			{% if CurrentLevel[1] <= 2 %} 
+			<div class="alert alert-danger" role="alert">
+       	                        <strong>Low Water Level </strong>
+				 Water Level is {{ '%0.2f' % CurrentLevel[1]}} recorded at {{CurrentLevel[0]}}.
+				 Christmas Tree needs to be watered
+                        </div>
+			{% endif %}
+
+			<div id="ex0"></div>
+
+		</div>
+	</div>
+	<div class="col-sm-1 col-md-1">
+	</div>
+ </div>
  
 </body>
 

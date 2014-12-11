@@ -38,13 +38,12 @@ def WaterLevel():
 	c = conn.cursor();
 	sqlstr = "SELECT DateAndTime, Pressure " \
 			"FROM PressureSensor "\
-			"ORDER BY rowid DESC LIMIT 280"
+			"ORDER BY rowid DESC LIMIT 432"
 		
 	
 	data = c.execute(sqlstr)				 
 	data = data.fetchall();
-	print(data)
-	
+		
 	WaterLevel=[]
 	timeoffset=-5  # 5 hour difference
 	n=0
@@ -53,7 +52,7 @@ def WaterLevel():
 		dstr =str(row[0]).strip()
 		d=datetime.strptime(dstr,'%m/%d/%y %H:%M:%S')+ timedelta(hours=timeoffset)	
 		dstr=d.strftime('%m/%d/%y %H:%M:%S');
-		print(dstr)
+		
 		WaterLevel.append([dstr,row[1]])
 		n=n+1
 	
@@ -61,7 +60,7 @@ def WaterLevel():
 
 
 	#ChartData=[{'data' : WaterLevel, 'name' :'Water Level '}]
-	return render_template('WaterLevel_Graph.html', WaterLevel=WaterLevel)
+	return render_template('WaterLevel_Graph.html', WaterLevel=WaterLevel, CurrentLevel = WaterLevel[0])
 
 
 
@@ -71,7 +70,8 @@ def ToggleLights():
 	writeoutput = False
 	loc=4;
 	
-	
+	fname=os.path.join(app.root_path,'GPIO','GPIOHandShake.txt')
+
 	if request.method =='GET':
 		lights = request.args.get('light')
 
@@ -85,10 +85,11 @@ def ToggleLights():
 		writeoutput = True
 
 	else:
-		lights ='Bad Request : {}  - not processed'.format(lights)
+		with open(fname,'r') as f:
+			status= f.read()
+		lights=status.split()[1]
 
 	if writeoutput:
-		fname = os.path.join(app.root_path,'GPIO','GPIOHandShake.txt')
 
 		with open(fname, 'w') as f:
 			f.write(outstr.format(loc))
