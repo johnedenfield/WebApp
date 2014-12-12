@@ -1,24 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title> Christmas Tree Lights </title>
 
+	<title> Christmas Tree Lights </title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	
 </head>
 
 <body>
+<div class="container">
 
-<h1> Turn On/Off The Christmas Tree Lights</h1>
+<div class="container">
+<div class="row">
 
-<p> Light Status: {{ lights }} </p>
+<nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="https://twitter.com/Jeden_field">RsbPI: Christmas Tree </a>
+        </div>
+		<ul class="nav navbar-nav navbar-right">
+                <li><a href="ChristmasTreeLights">Lights</a></li>
+                <li><a href="WaterLevel">Water Level</a></li>
+        </ul>
+</div><!-- /.container-fluid -->
+</nav>
 
-<form action ="ChristmasTreeLights" method =get>
-	<p>Turn Lights: <input  style="height:50px; width:50px" id='on1' type="submit" name='light'  value ='on'/> </p>
+
+<div/>
+
+
+<div class="row"> 
 	
-	<br/>
+<h1 class="page-header">Christmas Tree Lights</h1>
+</div>
+<div class="row">
+	<form action ="ChristmasTreeLights" method =get>	
+	{% if status == 1 %}
+	<div class ="col-sm-6 col-md-6"> 
+			<input  class="btn btn-primary btn-lg btn-block" id='on1' type="submit" 			name='light'  value ='on'/> 
+	</div>	
+		
+	<div class ="col-sm-6 col-md-6"> 
+			<input  class="btn btn-default btn-lg btn-block" id='off1' type="submit" name='light'  value ='off'/> 
+	</div>
+	{% else %}
+	<div class ="col-sm-6 col-md-6"> 
+			<input  class="btn btn-default btn-lg btn-block" id='on1' type="submit" 			name='light'  value ='on'/> 
+	</div>	
+		
+	<div class ="col-sm-6 col-md-6"> 
+			<input  class="btn btn-primary btn-lg btn-block" id='off1' type="submit" name='light'  value ='off'/> 
+	</div>
 	
-	<p>Turn Lights: <input  style="height:50px; width:50px" id='off1' type="submit" name='light'  value ='off'/></p>
-</form>
+	{% endif %}
+	</form>
+<div>
 
 </body>
 

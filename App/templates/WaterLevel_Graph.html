@@ -2,13 +2,16 @@
 <html>
 <head lang="en">
 	<meta charset="utf-8">
-    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title> Christmas Tree Water Level Graph</title>
-	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+	<script type="text/javascript" 	src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
-	<script type="text/javascript" src="{{ url_for('static', filename='jsCharts/WaterLevelChart.js')}}"></script>
+
+	<script  type="text/javascript" 	src="{{url_for('static',filename='jsCharts/WaterLevelChart.js')}}"></script>
+
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	
 	<script type="text/javascript">
@@ -21,40 +24,52 @@
 </head>
 
 <body>
-<div class="header"> 
+<div class="container">
+<div class="row">
+
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="https://twitter.com/Jeden_field">RsbPI: Christmas Tree </a>
+       		 </div>			
+
+	<ul class="nav navbar-nav navbar-right">
+		<li><a href="ChristmasTreeLights">Lights</a></li>
+		<li><a href="WaterLevel">Water Level</a></li>
+	</ul>
+	</div><!-- /.container-fluid -->
+</nav>
+
+
+<div/> 
+<div class="row"> 
+	
+<h1 class="page-header">Christmas Tree Water Level</h1>
 
 </div>
 <div class="row">
-        <div class="col-sm-1 col-md-1">
-
- 	</div>
-        <div class="col-sm-9 col-sm-offset-1 col-md-9 col-md-offset-1 main">
-         	<h1 class="page-header">Christmas Tree Water Level</h1>
-
-		<div class="row placeholders">
-			{% if CurrentLevel[1] > 2%}
-			 <div class="alert alert-success" role="alert">
-                                <strong>Ok Water Level </strong> 
-				Water Level is {{ '%0.2f' % CurrentLevel[1]}} recorded at {{CurrentLevel[0]}}.
-                        </div>
-			{% endif %}
-			
-			{% if CurrentLevel[1] <= 2 %} 
-			<div class="alert alert-danger" role="alert">
-       	                        <strong>Low Water Level </strong>
-				 Water Level is {{ '%0.2f' % CurrentLevel[1]}} recorded at {{CurrentLevel[0]}}.
-				 Christmas Tree needs to be watered
-                        </div>
-			{% endif %}
-
-			<div id="ex0"></div>
-
-		</div>
+	
+	<div class ="col-sm-12 col-md-12"> 
+	{% if CurrentLevel[1] > 2%}
+	<div class="alert alert-success" role="alert">
+		 <strong>Ok Water Level: </strong> Water Level is {{ '%0.2f' % CurrentLevel[1]}} " as recorded
+		 at {{CurrentLevel[0]}}.
 	</div>
-	<div class="col-sm-1 col-md-1">
-	</div>
- </div>
+	 {% endif %}
+
+	 {% if CurrentLevel[1] <= 2 %}
+	 <div class="alert alert-danger" role="alert"> 
+		 <strong>Low Water Level: </strong> 
+		 Water Level is {{ '%0.2f' % CurrentLevel[1]}}" as recorded at {{CurrentLevel[0]}}. Christmas Tree
+		 needs to be watered 
+	 </div> {% endif %}
+
+	 <div id="ex0"></div>
+
+ 	</div> 
+</div>
  
+</div>
 </body>
 
 

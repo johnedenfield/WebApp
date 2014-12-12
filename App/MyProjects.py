@@ -23,13 +23,13 @@ app.jinja_env.add_extension("chartkick.ext.charts")
 
 
 def connect_db():
-	print app.config['DATABASE']
+	#print app.config['DATABASE']
 	conn=sqlite3.connect(app.config['DATABASE'])
 	return conn
 
 @app.route('/')
 def Hello():
-	return app.config['DATABASE']
+	return 'Apps up and running'
 
 @app.route('/WaterLevel')
 def WaterLevel():
@@ -79,15 +79,22 @@ def ToggleLights():
 	if lights == 'on':
 		outstr ='{0} ON'
 		writeoutput = True
+		status=1
 
 	elif lights =='off':    
 		outstr ='{0} OFF'
 		writeoutput = True
-
+		status=0
 	else:
 		with open(fname,'r') as f:
 			status= f.read()
 		lights=status.split()[1]
+		
+		if lights =='ON':
+			status=1
+		else:
+			status=0
+
 
 	if writeoutput:
 
@@ -96,7 +103,7 @@ def ToggleLights():
 		
 
 
-	return render_template('ChristmasTreeLights.html', lights=lights)
+	return render_template('ChristmasTreeLights.html', lights=lights, status=status)
 
 if __name__=="__main__":
     app.debug = True
